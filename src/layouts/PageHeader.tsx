@@ -1,6 +1,9 @@
-import Logo from "../assets/YouTube_logo_(2017).png"
-import { Button } from "../components/Button"
+import Logo from "../assets/main_logo.png"
+import { UniformButton } from "../components/Button"
 import { useState } from "react";
+import UploadCard from "../components/UploadCard";
+
+
 
 
 export function PageHeader() {
@@ -8,14 +11,14 @@ export function PageHeader() {
     return (
       <div className="flex gap-10 lg:gap-20 justify-between pt-2 mb-6 mx-6">
         <div className={`flex gap-4 items-center flex-shrink-0 ${showFullWidthSearch ? 'hidden' : 'flex'}`} >
-          <Button variant="ghost" size="icon">
+          {/* <Button variant="ghost" size="icon">
             <ion-icon name="menu-outline"></ion-icon>
-          </Button>
+          </Button> */}
           <a href="/">
             <img src={Logo} className="h-6" />
           </a>
         </div>
-        <form className={`md:flex gap-4 flex-grow justify-center ${showFullWidthSearch ? 'flex' : 'hidden'}`}>
+        {/* <form className={`md:flex gap-4 flex-grow justify-center ${showFullWidthSearch ? 'flex' : 'hidden'}`}>
             {showFullWidthSearch && (
             <Button variant="ghost" size="icon"  onClick={() => setShowFullWidthSearch(false)} className={`flex-shrink-0 ${showFullWidthSearch ? 'flex' : 'hidden'}`}>
                 <ion-icon name="arrow-back-outline"></ion-icon>
@@ -34,23 +37,21 @@ export function PageHeader() {
             <Button type="button" size="icon">
                 <ion-icon className="flex-shrink-0" name="mic-outline"></ion-icon>
             </Button>
-        </form>
+        </form> */}
         <div className={`flex-shrink-0 md:gap-2 ${showFullWidthSearch ? 'hidden' : 'flex'}`}>
-         <Button onClick={() => setShowFullWidthSearch(true)} variant="ghost" size="icon" className="md:hidden">
+         <UniformButton onClick={() => setShowFullWidthSearch(true)} variant="ghost" size="icon" className="md:hidden">
             <ion-icon name="search-outline"></ion-icon>
-          </Button>
-          <Button variant="ghost" size="icon" className="md:hidden">
+          </UniformButton>
+          <UniformButton variant="ghost" size="icon" className="md:hidden">
             <ion-icon name="mic-outline"></ion-icon>
-          </Button>
-          <Button variant="ghost" size="icon">
-            <ion-icon name="cloud-upload-outline"></ion-icon>
-          </Button>
-          <Button variant="ghost" size="icon">
+          </UniformButton>
+          <UploadCard />
+          {/* <Button variant="ghost" size="icon">
             <ion-icon name="notifications-outline"></ion-icon>
-          </Button>
-          <Button variant="ghost" size="icon">
+          </Button> */}
+          <UniformButton variant="ghost" size="icon">
             <ion-icon name="person-circle-outline"></ion-icon>
-          </Button>
+          </UniformButton>
         </div>
       </div>
     );
