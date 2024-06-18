@@ -15,7 +15,7 @@ export function PageHeader() {
             <ion-icon name="menu-outline"></ion-icon>
           </Button> */}
           <a href="/">
-            <img src={Logo} className="h-6" />
+            <img src={Logo} className="h-10" />
           </a>
         </div>
         {/* <form className={`md:flex gap-4 flex-grow justify-center ${showFullWidthSearch ? 'flex' : 'hidden'}`}>
@@ -49,7 +49,7 @@ export function PageHeader() {
           {/* <Button variant="ghost" size="icon">
             <ion-icon name="notifications-outline"></ion-icon>
           </Button> */}
-          <UniformButton variant="ghost" size="icon">
+          <UniformButton variant="ghost" size="icon" className="text-lg">
             <ion-icon name="person-circle-outline"></ion-icon>
           </UniformButton>
         </div>

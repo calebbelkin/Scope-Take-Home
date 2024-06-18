@@ -12,7 +12,7 @@ function App() {
   // const [selectedCategory, setSelectedCategory] = useState(categories[0])
 
   return (
-    <div className="max-h-screen flex flex-col">
+    <div className="max-h-screen flex flex-col bg-[#F1CF54]">
       <PageHeader />
       <div className="grid gris-cols-[auto,1fr] flex-grow-1 overflow-auto"></div>
       {/* <div>Sidebar</div> */}
@@ -21,9 +21,10 @@ function App() {
         <CategoryPills categories={categories} selectedCategory={selectedCategory} onSelect={setSelectedCategory}/>
       </div> */}
       {/* </div> */}
-      <div>
-  Sample
-      </div>
+      <h1 className="flex justify-center text-4xl">
+        Welcome to Learnwell
+      </h1>
+      <VideoItems />
     </div>
   )
 }
