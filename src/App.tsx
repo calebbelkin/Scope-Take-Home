@@ -42,9 +42,9 @@ const MockVideos = [
   ];
 
   // const [selectedCategory, setSelectedCategory] = useState(categories[0])
-  const VideoData = MockVideos.map(video, index => {
+  const VideoData = MockVideos.map(video => {
     return (
-      <VideoItems key={index} user_id={user}/>
+      <VideoItems {...video}/>
     )
   })
 
@@ -62,13 +62,11 @@ const MockVideos = [
         Welcome to Learnwell
       </h1>
       <div className="outline-black">
-      <div>
-        <VideoGrid />
-    
+      <div className='flex flex-wrap gap-x-5 gap-y-10 pt-10 justify-center items-start'>
+      {VideoData}
       </div>
       </div>
-      
-    </div>
+      </div>
   )
 }
 

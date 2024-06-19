@@ -1,10 +1,10 @@
 
-function VideoGrid( { MockVideos }) {
-  return (
-    <div className='VideoRows'>
-       {MockVideos}
-    </div>
-  );
-}
+// function VideoGrid( { MockVideos }) {
+//   return (
+//     <div className='flex flex-wrap gap-x-5 gap-y-10 pt-10 justify-center items-start'>
+//        {MockVideos}
+//     </div>
+//   );
+// }
 
-export default VideoGrid;
+// export default VideoGrid;
