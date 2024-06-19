@@ -15,22 +15,21 @@ export function VideoItems ({
 
 
     return (
-        <div className="flex flex-col gap-2 p-4 bg-white rounded shadow">
-          <a href={video_url} className="relative w-30px h-auto ">
+        <div className="flex flex-col gap-2 p-4">
+          <a href={video_url} className="relative aspect-video">
             <iframe
               src={video_url}
               title={title}
-              className="w-full h-full"
-              frameBorder="0"
+              className="block w-full h-full object-cover rounded-xl"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </a>
           <div>
-            <h2 className="text-xl font-bold">{title}</h2>
-            <p className="text-sm">{description}</p>
-            <p className="text-xs text-gray-500">Uploaded by: {user_id}</p>
+            {/* <h2 className="text-xl font-bold">{title}</h2>
+            {/* <p className="text-sm">{description}</p> */}
+            {/* <p className="text-xs text-gray-500">Uploaded by: {user_id}</p>  */}
           </div>
         </div>
     );
-};
+}
