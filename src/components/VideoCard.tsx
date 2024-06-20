@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { UniformButton } from './Button';
 import ReactPlayer from 'react-player';
 import avatar from '../assets/boy.png'
+import womenAvatar from '../assets/woman.png'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -31,6 +32,12 @@ export default function VideoCard({ title, video_url, description }: VideoCardPr
   
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const mockUserComment = {
+    profile_pic: womenAvatar,
+    user_id: 'alyssa_thompson',
+    content: 'Super helpful video, I always find myself coming back to this one!'
+  }
 
   return (
     <div>
@@ -62,7 +69,7 @@ export default function VideoCard({ title, video_url, description }: VideoCardPr
           <div className='text-xl'>{title}</div>
           <div className='text-sm'>{description}</div>
           <div>0 Comments</div>
-          <div className='flex items-center bg-white'>
+          <div className='flex items-center '>
               <img src={avatar} className=' h-10 w-10 '>
               </img>
               <Box
@@ -79,6 +86,16 @@ export default function VideoCard({ title, video_url, description }: VideoCardPr
       Comment
     </UniformButton>
             
+          </div>
+          <div className=' flex pt-4'>
+          <img src={mockUserComment.profile_pic} className=' h-10 w-10 '>
+         
+          </img>
+          <div className='flex flex-col justify-between pl-3'>
+          <p className='text-xs'> @{mockUserComment.user_id }</p>
+          <p> {mockUserComment.content}</p>
+          </div>
+          
           </div>
           </div>
         </Box>
