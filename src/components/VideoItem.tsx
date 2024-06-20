@@ -1,3 +1,4 @@
+import VideoCard from "./VideoCard";
 
 type VideoItemsProps = {
     user_id: string;
@@ -27,7 +28,8 @@ export function VideoItems ({
             ></iframe>
           </a>
           <div>
-          <h2 className="text-xl font-bold">{title}</h2>
+            <VideoCard title={title} video_url={video_url} description={description}/>
+          {/* <h2 className="text-xl font-bold">{title}</h2> */}
             {/* <p className="text-sm">{description}</p>  */}
             <p className="text-xs text-gray-500">Uploaded by: {user_id}</p> 
           </div>

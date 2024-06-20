@@ -42,14 +42,14 @@ const MockVideos = [
   ];
 
   // const [selectedCategory, setSelectedCategory] = useState(categories[0])
-  const VideoData = MockVideos.map(video => {
+  const VideoData = MockVideos.map((video, index) => {
     return (
-      <VideoItems {...video}/>
+      <VideoItems key={index} {...video}/>
     )
   })
 
   return (
-    <div className="max-h-screen flex flex-col bg-[#F1CF54]">
+    <div className="max-h-screen flex flex-col bg-[#3AAfA9]">
       <PageHeader />
       {/* <div className="grid gris-cols-[auto,1fr] flex-grow-1 overflow-auto"></div> */}
       {/* <div>Sidebar</div> */}
