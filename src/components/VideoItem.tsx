@@ -1,17 +1,23 @@
 import VideoCard from "./VideoCard";
 
 type VideoItemsProps = {
-    user_id: string;
-    description: string;
-    video_url: string;
-    title: string;
+    created_at: string;
+  video_url: string;
+  user_id: string;
+  description: string;
+  title: string;
+  num_comments: number;
+  id: string;
   };
 
 export function VideoItems ({
+    created_at,
+    video_url,
     user_id, 
     description,
-    video_url,
     title,
+    num_comments,
+    id
 }: VideoItemsProps) {
 
 

@@ -27,20 +27,38 @@ export default function UploadCard() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const user_id = 'caleb_belkin';
+
+  const uploadVideo = () => {
+    fetch('http://localhost:1234/videos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: user_id,
+        description: description,
+        video_url: url,
+        title: title
+      })
+    })
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('Title:', title);
     console.log('Description:', description);
     console.log('URL:', url);
-    // Add your API call here to submit the form data
+    uploadVideo();
     handleClose();
   };
 
   return (
     <div>
-      <UniformButton variant="ghost" size="icon"
-        onClick={handleOpen}
-      >
+      <UniformButton variant="ghost" size="icon" onClick={handleOpen}>
         <ion-icon name="cloud-upload-outline"></ion-icon>
       </UniformButton>
       <Modal

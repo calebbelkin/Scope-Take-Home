@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import router from "./Routes/router";
 import cors from "cors";
 const app = express();
@@ -9,7 +9,7 @@ app.use(cors({ origin: "*" }));
 
 app.use("/", router);
 
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });
 });
 

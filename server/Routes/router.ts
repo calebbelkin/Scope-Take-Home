@@ -1,13 +1,15 @@
 import { Router } from "express";
-// import ApiController from "../Controllers/controller";
+import controller from "../Controllers/controller";
 const router = Router();
 
-// router.get("/videos/:user_id", ApiController.getVideos, (req, res) => {
-//   res.status(200).send(res.locals.videos);
-// });
-// router.post("/videos", ApiController.postVideo, (req, res) => {
-//   res.status(200).send(res.locals.response);
-// });
+router.get("/videos/:user_id", controller.getVideos, (req, res) => {
+    console.log('------IN get VIDEO ROUTER')
+  res.status(200).send(res.locals.videos);
+});
+router.post("/videos", controller.postVideo, (req, res) => {
+    console.log('------IN POST VIDEO ROUTER')
+  res.status(200).send(res.locals.response);
+});
 // router.put("/videos", ApiController.editVideo, (req, res) => {
 //   res.status(200).send(res.locals.response);
 // });
