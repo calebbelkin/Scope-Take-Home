@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { UniformButton } from './Button';
+import ReactPlayer from 'react-player';
+import avatar from '../assets/boy.png'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -45,19 +47,39 @@ export default function VideoCard({ title, video_url, description }: VideoCardPr
           {/* <Typography id="modal-modal-title" variant="h6" component="h2">
             Create a Post
           </Typography> */}
-            <div className="flex flex-col gap-2 p-4 w-[750px] h-[550px]">
-          <a href={video_url} className="relative aspect-video">
-            <iframe
+            <div className="flex flex-col gap-2 p-4 justify-center" >
+          {/* <a href={video_url} className="relative aspect-video"> */}
+            {/* <iframe
               src={video_url}
               title={title}
               // style={{ width: '450px', height: '300px' }}
               className="block w-full h-full object-cover rounded-xl"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-            ></iframe>
-          </a>
+            ></iframe> */}
+            <ReactPlayer url={video_url} controls/> 
+          {/* </a> */}
           <div className='text-xl'>{title}</div>
           <div className='text-sm'>{description}</div>
+          <div>0 Comments</div>
+          <div className='flex items-center bg-white'>
+              <img src={avatar} className=' h-10 w-10 '>
+              </img>
+              <Box
+      component="form"
+      sx={{ 
+        '& > :not(style)': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField id="standard-basic" label="Add a Comment..." variant="standard" />
+    </Box>
+    <UniformButton size='default' className='rounded-full py-1 text-sm'>
+      Comment
+    </UniformButton>
+            
+          </div>
           </div>
         </Box>
       </Modal>

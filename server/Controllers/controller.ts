@@ -19,7 +19,7 @@ const controller = {
               );
               const data = await response.json();
               console.log(data, 'line 21')
-              res.locals.response = data;
+              res.locals.videos = data;
               return next();
     
         } catch {

@@ -2,6 +2,7 @@ import Logo from "../assets/main_logo.png"
 import { UniformButton } from "../components/Button"
 import { useState } from "react";
 import UploadCard from "../components/UploadCard";
+import avatar from '../assets/boy.png'
 
 
 
@@ -49,9 +50,10 @@ export function PageHeader() {
           {/* <Button variant="ghost" size="icon">
             <ion-icon name="notifications-outline"></ion-icon>
           </Button> */}
-          <UniformButton variant="ghost" size="icon" className="text-lg">
-            <ion-icon name="person-circle-outline"></ion-icon>
-          </UniformButton>
+         
+            <img src={avatar} className="w-8 h-8 pt-1"></img>
+            {/* <ion-icon name="person-circle-outline"></ion-icon> */}
+          
         </div>
       </div>
     );

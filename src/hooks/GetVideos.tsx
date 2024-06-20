@@ -22,8 +22,7 @@ const useGetVideos = (url: string) => {
         
                 const text = await response.text();
                 const data = text ? JSON.parse(text) : [];
-                console.log(data.videos)
-                setVideos(data);
+                setVideos(data.videos);
             } catch (error) {
                 setError(error);
                 console.error('Error fetching videos:', error);
