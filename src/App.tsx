@@ -3,6 +3,7 @@ import { PageHeader } from "./layouts/PageHeader";
 import { VideoItems } from "./components/VideoItem";
 import useGetVideos from "./hooks/GetVideos";
 import { UserContext } from './context/UserContext';
+import { VideoContext } from './context/VideoContext';
 
 function App() {
   const { user_id } = useContext(UserContext);

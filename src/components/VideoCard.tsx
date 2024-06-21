@@ -8,6 +8,10 @@ import { UniformButton } from './Button';
 import ReactPlayer from 'react-player';
 import avatar from '../assets/boy.png';
 import womenAvatar from '../assets/woman.png';
+import { useEffect } from 'react';
+import { VideoContext } from '../context/VideoContext';
+import { useContext } from 'react';
+import { useState } from 'react';
 
 
 const style = {
@@ -29,15 +33,55 @@ interface VideoCardProps {
   title: string;
   video_url: string;
   description: string;
+  id: string;
 }
 
-export default function VideoCard({ title, video_url, description }: VideoCardProps) {
+export default function VideoCard({ title, video_url, description, id }: VideoCardProps) {
   const [open, setOpen] = React.useState(false);
+  const [comments, setComments] = React.useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  // const { curr_video_id, setCurrVideoId } = useContext(VideoContext);
+
+  
   
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const url = `http://localhost:1234/videos/comments?${id}`
 
+  
+    useEffect(() => {
+      console.log('fetchiong line 52')
+      const fetchComments = async () => {
+        try {
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+          });
+  
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+  
+          const text = await response.text();
+          const data = text ? JSON.parse(text) : [];
+          setComments(data.videos);
+          console.log(data.videos)
+        } catch (error) {
+          setError(error as Error);
+          console.error('Error fetching videos:', error);
+        }
+      };
+  
+      fetchComments();
+    }, []);
+
+  // const testId = () => {
+  //   setCurrVideoId
+  // }
   
 
   const mockUserComment = {
@@ -78,7 +122,7 @@ export default function VideoCard({ title, video_url, description }: VideoCardPr
               </UniformButton>
             </div>
             <div className="flex pt-4">
-              <img src={mockUserComment.profile_pic} alt="User avatar" className="h-10 w-10" />
+              <img src={mockUserComment.profile_pic} alt="User avatar" className="h-10 w-10" onClick={() => console.log(id)}/>
               <div className="flex flex-col justify-between pl-3">
                 <Typography variant="caption">@{mockUserComment.user_id}</Typography>
                 <Typography variant="body2">{mockUserComment.content}</Typography>

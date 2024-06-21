@@ -5,6 +5,7 @@ const useGetVideos = (url: string) => {
   const [videos, setVideos] = useState<VideoItemsProps[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -23,6 +24,7 @@ const useGetVideos = (url: string) => {
         const text = await response.text();
         const data = text ? JSON.parse(text) : [];
         setVideos(data.videos);
+
       } catch (error) {
         setError(error as Error);
         console.error('Error fetching videos:', error);

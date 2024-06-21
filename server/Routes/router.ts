@@ -13,9 +13,10 @@ router.post("/videos", controller.postVideo, (req, res) => {
 // router.put("/videos", ApiController.editVideo, (req, res) => {
 //   res.status(200).send(res.locals.response);
 // });
-// router.get("/videos/comments/:video_id", ApiController.getComments, (req, res) => {
-//   res.status(200).send(res.locals.comments);
-// });
+router.get("/videos/comments/:video_id",controller.getComments, (req, res) => {
+  console.log('------IN get COMMENTS ROUTER')
+  res.status(200).send(res.locals.comments);
+});
 // router.post("/videos/comments", ApiController.postComment, (req, res) => {
 //   res.status(200).send(res.locals.response);
 // });
