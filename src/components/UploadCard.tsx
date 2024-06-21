@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { UniformButton } from './Button';
+import { UserContext } from '../context/UserContext';
+
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,7 +30,10 @@ export default function UploadCard() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const user_id = 'caleb_belkin';
+  const { user_id } = useContext(UserContext);
+
+
+  // user id should be passed down from somwhere else 
 
   const uploadVideo = () => {
     fetch('http://localhost:1234/videos', {
@@ -49,9 +55,6 @@ export default function UploadCard() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Title:', title);
-    console.log('Description:', description);
-    console.log('URL:', url);
     uploadVideo();
     handleClose();
   };
@@ -96,7 +99,12 @@ export default function UploadCard() {
               onChange={(e) => setUrl(e.target.value)}
               className="w-full"
             />
-            <Button type="submit" variant="contained" color="primary" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white"
+            >
               Submit
             </Button>
           </form>
