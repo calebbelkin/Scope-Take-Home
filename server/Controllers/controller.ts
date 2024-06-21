@@ -83,6 +83,33 @@ const controller = {
       }
   },
 
+  async postComment (req: Request, res: Response, next: NextFunction) {
+    console.log('--------IN P COmment CONTROLLER--------')
+    const { video_id, content, user_id } = req.body;
+    // console.log(req.body)
+    try {
+        const response = await fetch(
+            "https://take-home-assessment-423502.uc.r.appspot.com/api/videos/comments",
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ video_id, content, user_id }),
+            }
+          );
+          const data = await response.json();
+          res.locals.response = data;
+          return next();
+
+    } catch {
+        return next({
+            err: "error in post Comment controller"
+        })
+    }
+},
+
 };
 
 

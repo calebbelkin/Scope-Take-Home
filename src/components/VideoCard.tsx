@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
@@ -8,11 +7,8 @@ import { UniformButton } from './Button';
 import ReactPlayer from 'react-player';
 import avatar from '../assets/boy.png';
 import womenAvatar from '../assets/woman.png';
-import { useEffect } from 'react';
-import { VideoContext } from '../context/VideoContext';
-import { useContext } from 'react';
-import { useState } from 'react';
-
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -37,52 +33,72 @@ interface VideoCardProps {
 }
 
 export default function VideoCard({ title, video_url, description, id }: VideoCardProps) {
-  const [open, setOpen] = React.useState(false);
-  const [comments, setComments] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [comments, setComments] = useState(false);
+  const [localComment, setLocalComment] = useState('');
   const [error, setError] = useState<Error | null>(null);
-  // const { curr_video_id, setCurrVideoId } = useContext(VideoContext);
+  const { user_id } = useContext(UserContext);
 
-  
-  
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleSubmit = () => {
+    console.log('Comment:', localComment);
+    uploadComment();
+    setLocalComment('');
+    console.log('Comment cleared:', localComment);
+  };
 
-  const url = `http://localhost:1234/videos/comments?${id}`
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-  
-    useEffect(() => {
-      console.log('fetchiong line 52')
-      const fetchComments = async () => {
-        try {
-          const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-          });
-  
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-  
-          const text = await response.text();
-          const data = text ? JSON.parse(text) : [];
-          setComments(data.videos);
-          console.log(data.videos)
-        } catch (error) {
-          setError(error as Error);
-          console.error('Error fetching videos:', error);
-        }
-      };
-  
-      fetchComments();
-    }, []);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  // const testId = () => {
-  //   setCurrVideoId
-  // }
-  
+  const url = `http://localhost:1234/videos/comments?${id}`;
+
+//   useEffect(() => {
+//     const fetchComments = async () => {
+//       try {
+//         const response = await fetch(url, {
+//           method: 'GET',
+//           headers: {
+//             Accept: 'application/json',
+//             'Content-Type': 'application/json',
+//           });
+
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+
+//         const text = await response.text();
+//         const data = text ? JSON.parse(text) : [];
+//         setComments(data.videos);
+//         console.log(data.videos);
+//       } catch (error) {
+//         setError(error as Error);
+//         console.error('Error fetching videos:', error);
+//       }
+//     };
+
+//     fetchComments();
+//   }, [url]);
+
+const uploadComment = () => {
+    fetch('http://localhost:1234/videos/comments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        video_id: id,
+        content: localComment,
+        user_id: user_id,
+      }),
+    })
+      .then((response) => response.text())
+      .then((data) => console.log(data))
+      .catch((error) => console.error('Error:', error));
+  };
 
   const mockUserComment = {
     profile_pic: womenAvatar,
@@ -115,14 +131,20 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                 noValidate
                 autoComplete="off"
               >
-                <TextField id="standard-basic" label="Add a Comment..." variant="standard" />
+                <TextField
+                  id="standard-basic"
+                  label="Add a Comment..."
+                  variant="standard"
+                  value={localComment}
+                  onChange={(e) => setLocalComment(e.target.value)}
+                />
               </Box>
-              <UniformButton size="default" className="rounded-full py-1 text-sm">
+              <UniformButton size="default" className="rounded-full py-1 text-sm" onClick={handleSubmit}>
                 Comment
               </UniformButton>
             </div>
             <div className="flex pt-4">
-              <img src={mockUserComment.profile_pic} alt="User avatar" className="h-10 w-10" onClick={() => console.log(id)}/>
+              <img src={mockUserComment.profile_pic} alt="User avatar" className="h-10 w-10" onClick={() => console.log(id)} />
               <div className="flex flex-col justify-between pl-3">
                 <Typography variant="caption">@{mockUserComment.user_id}</Typography>
                 <Typography variant="body2">{mockUserComment.content}</Typography>

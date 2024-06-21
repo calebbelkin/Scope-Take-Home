@@ -26,6 +26,8 @@
     "url": "^0.11.3"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17"
+    "@types/cors": "^2.8.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
   }
 }
