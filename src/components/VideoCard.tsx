@@ -9,7 +9,8 @@ import avatar from '../assets/boy.png';
 import womenAvatar from '../assets/woman.png';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-
+import UserAvatar from '../assets/boy.png';
+import EditVideoCard from '../components/EditVideoCard'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -37,14 +38,12 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState<any[]>([]);
   const [localComment, setLocalComment] = useState('');
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { user_id } = useContext(UserContext);
 
   const handleSubmit = () => {
-    console.log('Comment:', localComment);
     uploadComment();
     setLocalComment('');
-    console.log('Comment cleared:', localComment);
   };
 
   const handleOpen = () => {
@@ -62,7 +61,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-        }
+        },
       });
 
       if (!response.ok) {
@@ -70,8 +69,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
       }
 
       const data = await response.json();
-      console.log(data)
-      setComments(data.comments || []); // Assuming the API response contains a 'comments' field
+      setComments(data.comments || []);
     } catch (error) {
       setError("Error in fetching comments");
     }
@@ -96,23 +94,19 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
           user_id: user_id,
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
-      const data = await response.json();
-      console.log(data);
-      fetchComments(); // Refresh comments after a new comment is added
+
+      fetchComments();
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-  
-
   const mockUserComment = {
-    video_id : 'kDIZktbOa5x89QBr6p41',
+    video_id: 'kDIZktbOa5x89QBr6p41',
     profile_pic: womenAvatar,
     user_id: 'alyssa_thompson',
     content: 'Super helpful video, I always find myself coming back to this one!',
@@ -133,10 +127,18 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
           <div className="flex flex-col gap-2 p-4 justify-center">
             <ReactPlayer url={video_url} controls />
             <Typography variant="h6">{title}</Typography>
-            <Typography variant="body2">{description}</Typography>
-            <Typography variant="body2">0 Comments</Typography>
             <div className="flex items-center">
-              <img src={avatar} alt="User avatar" className="h-10 w-10" />
+                <img src={UserAvatar} alt="User avatar" className="h-8 w-8" />
+                <div className="flex flex-col justify-between pl-3">
+                  <Typography variant="caption"> Uploaded by @{user_id}</Typography>
+                  
+                </div>
+                <EditVideoCard id={id} video_url={video_url}/>
+            </div>
+            <Typography variant="body2">{description} </Typography>
+            <Typography variant="body2">{comments.length} Comments</Typography>
+            <div className="flex items-center">
+              <img src={avatar} alt="User avatar" className="h-10 w-10" onClick={() => console.log(id)} />
               <Box
                 component="form"
                 sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
@@ -155,17 +157,19 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                 Comment
               </UniformButton>
             </div>
-            <div className="flex pt-4">
-              <img src={mockUserComment.profile_pic} alt="User avatar" className="h-10 w-10" onClick={() => console.log(id)} />
-              <div className="flex flex-col justify-between pl-3">
-                <Typography variant="caption">@{mockUserComment.user_id}</Typography>
-                <Typography variant="body2">{mockUserComment.content}</Typography>
+            {mockUserComment.video_id === id && (
+              <div className="flex pt-4">
+                <img src={mockUserComment.profile_pic} alt="User avatar" className="h-10 w-10" />
+                <div className="flex flex-col justify-between pl-3">
+                  <Typography variant="caption">@{mockUserComment.user_id}</Typography>
+                  <Typography variant="body2">{mockUserComment.content}</Typography>
+                </div>
               </div>
-            </div>
+            )}
             <div>
               {comments.map((comment, index) => (
                 <div key={index} className="flex pt-4">
-                  <img src={comment.profile_pic || womenAvatar} alt="User avatar" className="h-10 w-10" />
+                  <img src={UserAvatar} alt="User avatar" className="h-10 w-10" />
                   <div className="flex flex-col justify-between pl-3">
                     <Typography variant="caption">@{comment.user_id}</Typography>
                     <Typography variant="body2">{comment.content}</Typography>
@@ -173,6 +177,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                 </div>
               ))}
             </div>
+            {error && <Typography variant="body2" color="error">{error}</Typography>}
           </div>
         </Box>
       </Modal>

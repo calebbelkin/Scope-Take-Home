@@ -109,6 +109,33 @@ const controller = {
     }
 },
 
+async editVideo (req: Request, res: Response, next: NextFunction) {
+  console.log('--------IN edit video CONTROLLER--------')
+  const { user_id, video_url, video_id, title, description } = req.body;
+
+  try {
+      const response = await fetch(
+          "https://take-home-assessment-423502.uc.r.appspot.com/api/videos",
+          {
+            method: "PUT",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({user_id, video_url, video_id, title, description}),
+          }
+        );
+        const data = await response.json();
+        res.locals.response = data;
+        return next();
+
+  } catch {
+      return next({
+          err: "error in post Comment controller"
+      })
+  }
+},
+
 };
 
 

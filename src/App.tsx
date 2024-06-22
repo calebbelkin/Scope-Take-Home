@@ -9,9 +9,12 @@ function App() {
   const { user_id } = useContext(UserContext);
   const { videos, error } = useGetVideos(`http://localhost:1234/videos/${user_id}`);
 
-  const VideoData = videos.map((video, index) => (
-    <VideoItems key={index} {...video} />
-  ));
+  const VideoData = videos.map((video, index) => {
+    if (video.video_url == '') {
+      return null;
+    }
+    return <VideoItems key={index} {...video} />;
+  });
 
   return (
     <div className="max-h-screen flex flex-col bg-[#3AAfA9]">
