@@ -10,6 +10,7 @@ import womenAvatar from '../assets/woman.png';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -34,7 +35,7 @@ interface VideoCardProps {
 
 export default function VideoCard({ title, video_url, description, id }: VideoCardProps) {
   const [open, setOpen] = useState(false);
-  const [comments, setComments] = useState(false);
+  const [comments, setComments] = useState<any[]>([]);
   const [localComment, setLocalComment] = useState('');
   const [error, setError] = useState<Error | null>(null);
   const { user_id } = useContext(UserContext);
@@ -54,53 +55,64 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
     setOpen(false);
   };
 
-  const url = `http://localhost:1234/videos/comments?${id}`;
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`http://localhost:1234/videos/comments/${id}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
 
-//   useEffect(() => {
-//     const fetchComments = async () => {
-//       try {
-//         const response = await fetch(url, {
-//           method: 'GET',
-//           headers: {
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//           });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-
-//         const text = await response.text();
-//         const data = text ? JSON.parse(text) : [];
-//         setComments(data.videos);
-//         console.log(data.videos);
-//       } catch (error) {
-//         setError(error as Error);
-//         console.error('Error fetching videos:', error);
-//       }
-//     };
-
-//     fetchComments();
-//   }, [url]);
-
-const uploadComment = () => {
-    fetch('http://localhost:1234/videos/comments', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        video_id: id,
-        content: localComment,
-        user_id: user_id,
-      }),
-    })
-      .then((response) => response.text())
-      .then((data) => console.log(data))
-      .catch((error) => console.error('Error:', error));
+      const data = await response.json();
+      console.log(data)
+      setComments(data.comments || []); // Assuming the API response contains a 'comments' field
+    } catch (error) {
+      setError("Error in fetching comments");
+    }
   };
 
+  useEffect(() => {
+    if (open) {
+      fetchComments();
+    }
+  }, [open, id]);
+
+  const uploadComment = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/videos/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          video_id: id,
+          content: localComment,
+          user_id: user_id,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(data);
+      fetchComments(); // Refresh comments after a new comment is added
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  
+
   const mockUserComment = {
+    video_id : 'kDIZktbOa5x89QBr6p41',
     profile_pic: womenAvatar,
     user_id: 'alyssa_thompson',
     content: 'Super helpful video, I always find myself coming back to this one!',
@@ -149,6 +161,17 @@ const uploadComment = () => {
                 <Typography variant="caption">@{mockUserComment.user_id}</Typography>
                 <Typography variant="body2">{mockUserComment.content}</Typography>
               </div>
+            </div>
+            <div>
+              {comments.map((comment, index) => (
+                <div key={index} className="flex pt-4">
+                  <img src={comment.profile_pic || womenAvatar} alt="User avatar" className="h-10 w-10" />
+                  <div className="flex flex-col justify-between pl-3">
+                    <Typography variant="caption">@{comment.user_id}</Typography>
+                    <Typography variant="body2">{comment.content}</Typography>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </Box>

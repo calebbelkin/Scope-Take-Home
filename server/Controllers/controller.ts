@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from "express";
 const controller = {
 
     async getVideos (req: Request, res: Response, next: NextFunction) {
-        console.log('--------IN GET V CONTROLLER--------')
         const { user_id } = req.params;
         // console.log(req.params)
         try {
@@ -58,11 +57,11 @@ const controller = {
 
     async getComments (req: Request, res: Response, next: NextFunction) {
       console.log('--------IN GET Comments CONTROLLER--------')
-      const { id } = req.params;
+      const { video_id } = req.params;
       console.log(req.params)
       try {
           const response = await fetch(
-              `https://take-home-assessment-423502.uc.r.appspot.com/api/videos/comments?video_id=${id}`,
+              `https://take-home-assessment-423502.uc.r.appspot.com/api/videos/comments?video_id=${video_id}`,
               {
                 method: "GET",
                 headers: {
