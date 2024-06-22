@@ -33,6 +33,7 @@ export default function UploadCard() {
   const { user_id } = useContext(UserContext);
 
 
+
   // user id should be passed down from somwhere else 
 
   const uploadVideo = () => {
@@ -61,9 +62,9 @@ export default function UploadCard() {
 
   return (
     <div>
-      <UniformButton variant="ghost" size="icon" onClick={handleOpen}>
-        <ion-icon name="cloud-upload-outline"></ion-icon>
-      </UniformButton>
+    <UniformButton variant="ghost" size="icon" onClick={handleOpen}>
+  <ion-icon name="cloud-upload-outline" style={{ fontSize: '1.5rem' }}></ion-icon> {/* Adjust the size here */}
+</UniformButton>
       <Modal
         open={open}
         onClose={handleClose}

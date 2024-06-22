@@ -10,7 +10,8 @@ import womenAvatar from '../assets/woman.png';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import UserAvatar from '../assets/boy.png';
-import EditVideoCard from '../components/EditVideoCard'
+import EditVideoCard from '../components/EditVideoCard';
+import { Divider } from '@mui/material';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,13 +19,15 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 900,
-  bgcolor: '#DEF2F1',
+  bgcolor: '#D3D9D4',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  maxHeight: '90vh',
+  overflowY: 'auto',
 };
 
 interface VideoCardProps {
@@ -114,7 +117,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
 
   return (
     <div>
-      <div onClick={handleOpen} className="cursor-pointer">
+      <div onClick={handleOpen} className="cursor-pointer ">
         {title}
       </div>
       <Modal
@@ -124,20 +127,33 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div className="flex flex-col gap-2 p-4 justify-center">
-            <ReactPlayer url={video_url} controls />
-            <Typography variant="h6">{title}</Typography>
-            <div className="flex items-center">
+          <div className="flex flex-col gap-2 p-4 justify-center w-full">
+          <div className="relative w-full flex justify-center">
+  <div className="overflow-hidden rounded-lg w-full" style={{ paddingTop: '56.25%' }}> {/* 16:9 Aspect Ratio */}
+    <ReactPlayer
+      url={video_url}
+      controls
+      width="100%"
+      height="100%"
+      style={{ position: 'absolute', top: 0, left: 0 }}
+    />
+  </div>
+</div>
+            <Typography className='pt-3' variant="h5">{title}</Typography>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center">
                 <img src={UserAvatar} alt="User avatar" className="h-8 w-8" />
                 <div className="flex flex-col justify-between pl-3">
                   <Typography variant="caption"> Uploaded by @{user_id}</Typography>
-                  
                 </div>
-                <EditVideoCard id={id} video_url={video_url}/>
+              </div>
+              <EditVideoCard id={id} video_url={video_url}/>
             </div>
-            <Typography variant="body2">{description} </Typography>
-            <Typography variant="body2">{comments.length} Comments</Typography>
-            <div className="flex items-center">
+            <Typography variant="body2">{description}</Typography>
+            <Divider />
+            <Typography variant="h7" style={{ fontWeight: 'bold' }}>
+  {comments.length} Comments
+</Typography>            <div className="flex items-center">
               <img src={avatar} alt="User avatar" className="h-10 w-10" onClick={() => console.log(id)} />
               <Box
                 component="form"

@@ -22,7 +22,9 @@ export function VideoItems({
 }: VideoItemsProps) {
   return (
     <div className="flex flex-col gap-2 p-4 relative aspect-video">
+       <div className="overflow-hidden rounded-lg">
       <ReactPlayer url={video_url} controls />  
+      </div>
       <div>
         <VideoCard title={title} video_url={video_url} description={description} id={id} />
         <p className="text-xs text-gray-500">Uploaded by: {user_id}</p> 

@@ -4,20 +4,21 @@ import UploadCard from "../components/UploadCard";
 import avatar from '../assets/boy.png';
 import LoginCard from "../components/LoginCard";
 import { UserContext } from '../context/UserContext';
+import Divider from '@mui/material/Divider';
 
 export function PageHeader() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
   const { user_id, setUserId } = useContext(UserContext);
 
   return (
-    <div className="flex gap-10 lg:gap-20 justify-between pt-2 mb-6 mx-6">
-      <div className={`flex gap-4 items-center flex-shrink-0 ${showFullWidthSearch ? 'hidden' : 'flex'}`}>
+    <div className="flex items-center justify-between py-4 px-6 mb-6"> {/* Adjusted padding for equal spacing */}
+      <div className={`flex items-center ${showFullWidthSearch ? 'hidden' : 'flex'} flex-shrink-0`}>
         <a href="/">
-          <img src={Logo} className="h-10" alt="Logo" />
+          <img src={Logo} className="h-12" alt="Logo" />
         </a>
       </div>
 
-      <div className={`flex-shrink-0 md:gap-2 ${showFullWidthSearch ? 'hidden' : 'flex'}`}>
+      <div className={`flex-shrink-0 md:gap-2 ${showFullWidthSearch ? 'hidden' : 'flex'} items-center`}>
         <UploadCard />
         {user_id === '' ? (
           <LoginCard setUserId={setUserId} />
