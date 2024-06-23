@@ -5,28 +5,21 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { UniformButton } from './Button';
 import ReactPlayer from 'react-player';
-import avatar from '../assets/boy.png';
-import womenAvatar from '../assets/woman.png';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-import UserAvatar from '../assets/boy.png';
 import EditVideoCard from '../components/EditVideoCard';
 import { Divider } from '@mui/material';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import Stack from '@mui/material/Stack';
-import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import Slider from '@mui/material/Slider';
+import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import FormHelperText from '@mui/material/FormHelperText';
-
-
-
-
+import avatar from '../assets/boy.png';
+import womenAvatar from '../assets/woman.png';
+import UserAvatar from '../assets/boy.png';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -58,16 +51,17 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
   const [localComment, setLocalComment] = useState('');
   const [error, setError] = useState<string | null>(null);
   const { user_id } = useContext(UserContext);
-  const [age, setAge] = React.useState('');
+  const [volume, setVolume] = useState(0.7);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+//   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [value, setValue] = React.useState<number>(30);
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number);
+  const handleChangeVolume = (event: Event, newValue: number | number[]) => {
+    setVolume(newValue as number);
   };
 
-  const handleChangeMenu = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+  const handleChangeSpeed = (event: SelectChangeEvent) => {
+    setPlaybackSpeed(Number(event.target.value));
+    console.log(playbackSpeed)
   };
 
   const handleSubmit = () => {
@@ -143,7 +137,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
 
   return (
     <div>
-      <div onClick={handleOpen} className="cursor-pointer ">
+      <div onClick={handleOpen} className="cursor-pointer">
         {title}
       </div>
       <Modal
@@ -154,47 +148,58 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
       >
         <Box sx={style}>
           <div className="flex flex-col gap-2 p-4 justify-center w-full">
-          <div className="relative w-full flex justify-center">
-  <div className="overflow-hidden rounded-lg w-full" style={{ paddingTop: '56.25%' }}> {/* 16:9 Aspect Ratio */}
-    <ReactPlayer
-      url={video_url}
-      controls
-      width="100%"
-      height="100%"
-      style={{ position: 'absolute', top: 0, left: 0 }}
-    />
-  </div>
-</div>
-<div>
-      
-      <div className='flex justify-between items-center'>
-      <Typography className='pt-1' variant="h5">{title}</Typography>
-        <div className='flex items-center'></div>
-        <div className='flex items-center space-x-2'>
-          <VolumeDown />
-          <Box sx={{ minWidth: 120, display: 'flex', alignItems: 'center' }}>
-            <Slider aria-label="Volume" value={value} onChange={handleChange} className='mr-2' />
-          </Box>
-          <VolumeUp />
-          <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
-            <InputLabel id="demo-select-small-label">Speed</InputLabel>
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              value={age}
-              label="Age"
-              onChange={handleChangeMenu}
-            >
-              <MenuItem value={10}>0.75x</MenuItem>
-              <MenuItem value={20}>Normal</MenuItem>
-              <MenuItem value={30}>1.25x</MenuItem>
-            </Select>
-            {/* <FormHelperText>Playback Speed</FormHelperText> */}
-          </FormControl>
-          <FullscreenIcon fontSize="large"/>
-        </div>
-      </div>
-    </div>
+            <div className="relative w-full flex justify-center">
+              <div className="overflow-hidden rounded-lg w-full" style={{ paddingTop: '56.25%' }}>
+                {/* 16:9 Aspect Ratio */}
+                <ReactPlayer
+                  url={video_url}
+                  volume={volume}
+                //   playing={isPlaying}
+                  playbackRate={playbackSpeed}
+                  controls
+                  width="100%"
+                  height="100%"
+                  style={{ position: 'absolute', top: 0, left: 0 }}
+                />
+              </div>
+            </div>
+            <div>
+              <div className='flex justify-between items-center'>
+                <Typography className='pt-1' variant="h5">{title}</Typography>
+                <div className='flex items-center'></div>
+                <div className='flex items-center space-x-2'>
+                  <VolumeDown />
+                  <Box sx={{ minWidth: 120, display: 'flex', alignItems: 'center' }}>
+                    <Slider
+                      aria-label="Volume"
+                      value={volume}
+                      min={0}
+                      max={1}
+                      step={0.01}
+                      onChange={handleChangeVolume}
+                      className='mr-2'
+                    />
+                  </Box>
+                  <VolumeUp />
+                  <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
+                    <InputLabel id="demo-select-small-label">Speed</InputLabel>
+                    <Select
+                      labelId="demo-select-small-label"
+                      id="demo-select-small"
+                      value={playbackSpeed}
+                      label="Speed"
+                      onChange={handleChangeSpeed}
+                    >
+                      <MenuItem value={0.75}>0.75x</MenuItem>
+                      <MenuItem value={1}>Normal</MenuItem>
+                      <MenuItem value={1.25}>1.25x</MenuItem>
+                      <MenuItem value={1.5}>1.5x</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FullscreenIcon fontSize="large" />
+                </div>
+              </div>
+            </div>
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center">
                 <img src={UserAvatar} alt="User avatar" className="h-8 w-8" />
@@ -202,14 +207,15 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                   <Typography variant="caption"> Uploaded by @{user_id}</Typography>
                 </div>
               </div>
-              <EditVideoCard id={id} video_url={video_url}/>
+              <EditVideoCard id={id} video_url={video_url} />
             </div>
             <Typography variant="body2">{description}</Typography>
             <Divider />
             <Typography variant="h7" style={{ fontWeight: 'bold' }}>
-  {comments.length} Comments
-</Typography>            <div className="flex items-center">
-              <img src={avatar} alt="User avatar" className="h-10 w-10" onClick={() => console.log(id)} />
+              {comments.length} Comments
+            </Typography>
+            <div className="flex items-center">
+              <img src={avatar} alt="User avatar" className="h-10 w-10" />
               <Box
                 component="form"
                 sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
