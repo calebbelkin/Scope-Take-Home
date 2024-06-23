@@ -207,7 +207,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                   <Typography variant="caption"> Uploaded by @{user_id}</Typography>
                 </div>
               </div>
-              <EditVideoCard id={id} video_url={video_url} />
+              <EditVideoCard id={id} video_url={video_url} currTitle={title} currDescription={description}/>
             </div>
             <Typography variant="body2">{description}</Typography>
             <Divider />

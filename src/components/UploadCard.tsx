@@ -7,18 +7,20 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { UniformButton } from './Button';
 import { UserContext } from '../context/UserContext';
-
+import ReactPlayer from 'react-player';
 
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '90%',
+  maxWidth: 800,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'hidden',
 };
 
 export default function UploadCard() {
@@ -32,26 +34,22 @@ export default function UploadCard() {
 
   const { user_id } = useContext(UserContext);
 
-
-
-  // user id should be passed down from somwhere else 
-
   const uploadVideo = () => {
     fetch('http://localhost:1234/videos', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         user_id: user_id,
         description: description,
         video_url: url,
-        title: title
-      })
+        title: title,
+      }),
     })
-    .then(response => response.text())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
+      .then((response) => response.text())
+      .then((data) => console.log(data))
+      .catch((error) => console.error('Error:', error));
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -62,9 +60,9 @@ export default function UploadCard() {
 
   return (
     <div>
-    <UniformButton variant="ghost" size="icon" onClick={handleOpen}>
-  <ion-icon name="cloud-upload-outline" style={{ fontSize: '1.5rem' }}></ion-icon> {/* Adjust the size here */}
-</UniformButton>
+      <UniformButton variant="ghost" size="icon" onClick={handleOpen}>
+        <ion-icon name="cloud-upload-outline" style={{ fontSize: '1.5rem' }}></ion-icon>
+      </UniformButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -100,14 +98,22 @@ export default function UploadCard() {
               onChange={(e) => setUrl(e.target.value)}
               className="w-full"
             />
-            <Button
+          {url && (
+  <div className="relative pt-[56.25%] mt-4 w-full border border-gray-300">
+    <ReactPlayer url={url} controls className="absolute top-0 left-0 w-full h-full" />
+  </div>
+)}
+<div className='flex justify-end'>
+<Button
               type="submit"
               variant="contained"
               color="primary"
-              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white"
+              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white "
             >
               Submit
             </Button>
+</div>
+
           </form>
         </Box>
       </Modal>

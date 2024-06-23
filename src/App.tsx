@@ -18,16 +18,29 @@ function App() {
     }
     return <VideoItems key={index} {...video} />;
   }); 
+
+  const firstName = user_id.split('_')[0];
+  const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
   
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 to-white">
       <PageHeader />
-      <h1 className="flex justify-center text-4xl pb-5">
-        Welcome to Learnwell
-      </h1>
+      {user_id === '' ? (
+        <h1 className="flex justify-center text-4xl pb-5">
+          Welcome to Learnwell - Please Log In to Get Started
+        </h1>
+      ) : (
+        <h1 className="flex justify-center text-4xl pb-5">
+          Welcome {capitalizedFirstName}
+        </h1>
+      )}
       <Divider />
-      {/* <Carousel slides={SLIDES} options={OPTIONS} /> */}
+      {user_id && videos.length === 0 && (
+        <h2 className="flex justify-center text-2xl pt-5">
+          Upload your first video to get started
+        </h2>
+      )}
       <div className="outline-black flex-grow">
         <div className='flex flex-wrap gap-x-5 gap-y-10 pt-10 justify-center items-start'>
           {VideoData}

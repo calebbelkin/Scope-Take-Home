@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -7,7 +7,6 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { UniformButton } from './Button';
 import { UserContext } from '../context/UserContext';
-
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -22,14 +21,15 @@ const style = {
 };
 
 interface EditVideoProps {
-    id: string;
-    video_url: string;
-  }
+  id: string;
+  video_url: string;
+  currTitle: string;
+  currDescription: string;
+}
 
-
-export default function UploadCard({ id, video_url }: EditVideoProps) {
-  const [newTitle, setNewTitle] = React.useState('');
-  const [newDescription, setNewDescription] = React.useState('');
+export default function EditVideoCard({ id, video_url, currDescription, currTitle }: EditVideoProps) {
+  const [newTitle, setNewTitle] = React.useState(currTitle);
+  const [newDescription, setNewDescription] = React.useState(currDescription);
   const [open, setOpen] = React.useState(false);
   
   const handleOpen = () => setOpen(true);
@@ -48,21 +48,27 @@ export default function UploadCard({ id, video_url }: EditVideoProps) {
         video_url: video_url,
         video_id: id,
         title: newTitle,
-        description: newTitle
+        description: newDescription
       })
     })
     .then(response => response.text())
-    .then(data => console.log(data, 'in edit video cxonsole log with dat a'))
+    .then(data => console.log(data, 'in edit video console log with data'))
     .catch(error => console.error('Error:', error));
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     editVideo();
-    setNewDescription('')
-    setNewTitle('')
+    setNewDescription(currDescription);
+    setNewTitle(currTitle);
     handleClose();
   };
+
+  // Update the state if props change
+  useEffect(() => {
+    setNewTitle(currTitle);
+    setNewDescription(currDescription);
+  }, [currTitle, currDescription]);
 
   return (
     <div>

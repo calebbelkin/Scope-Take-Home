@@ -19,7 +19,11 @@ export function PageHeader() {
       </div>
 
       <div className={`flex-shrink-0 md:gap-2 ${showFullWidthSearch ? 'hidden' : 'flex'} items-center`}>
-        <UploadCard />
+      {user_id === '' ? (
+          null
+        ) : (
+          <UploadCard />
+        )}
         {user_id === '' ? (
           <LoginCard setUserId={setUserId} />
         ) : (
