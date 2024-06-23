@@ -12,6 +12,21 @@ import { UserContext } from '../context/UserContext';
 import UserAvatar from '../assets/boy.png';
 import EditVideoCard from '../components/EditVideoCard';
 import { Divider } from '@mui/material';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import Stack from '@mui/material/Stack';
+import Slider from '@mui/material/Slider';
+import VolumeDown from '@mui/icons-material/VolumeDown';
+import VolumeUp from '@mui/icons-material/VolumeUp';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
+
+
+
+
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -43,6 +58,17 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
   const [localComment, setLocalComment] = useState('');
   const [error, setError] = useState<string | null>(null);
   const { user_id } = useContext(UserContext);
+  const [age, setAge] = React.useState('');
+
+  const [value, setValue] = React.useState<number>(30);
+
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number);
+  };
+
+  const handleChangeMenu = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string);
+  };
 
   const handleSubmit = () => {
     uploadComment();
@@ -139,7 +165,36 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
     />
   </div>
 </div>
-            <Typography className='pt-3' variant="h5">{title}</Typography>
+<div>
+      
+      <div className='flex justify-between items-center'>
+      <Typography className='pt-1' variant="h5">{title}</Typography>
+        <div className='flex items-center'></div>
+        <div className='flex items-center space-x-2'>
+          <VolumeDown />
+          <Box sx={{ minWidth: 120, display: 'flex', alignItems: 'center' }}>
+            <Slider aria-label="Volume" value={value} onChange={handleChange} className='mr-2' />
+          </Box>
+          <VolumeUp />
+          <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
+            <InputLabel id="demo-select-small-label">Speed</InputLabel>
+            <Select
+              labelId="demo-select-small-label"
+              id="demo-select-small"
+              value={age}
+              label="Age"
+              onChange={handleChangeMenu}
+            >
+              <MenuItem value={10}>0.75x</MenuItem>
+              <MenuItem value={20}>Normal</MenuItem>
+              <MenuItem value={30}>1.25x</MenuItem>
+            </Select>
+            {/* <FormHelperText>Playback Speed</FormHelperText> */}
+          </FormControl>
+          <FullscreenIcon fontSize="large"/>
+        </div>
+      </div>
+    </div>
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center">
                 <img src={UserAvatar} alt="User avatar" className="h-8 w-8" />
