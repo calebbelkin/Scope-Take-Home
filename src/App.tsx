@@ -22,13 +22,13 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 to-white">
       <PageHeader />
-      {user_id ? (
+      {user_id && videos.length > 0 ? (
         <h1 className="flex justify-center text-4xl pb-5">
-          Welcome {capitalizedFirstName}
+          Welcome Back, {capitalizedFirstName}!
         </h1>
       ) : (
         <h1 className="flex justify-center text-4xl pb-5">
-          Welcome to Learnwell - Please Log In to Get Started
+          Welcome to Learnwell 
         </h1>
       )}
       <Divider />
@@ -37,7 +37,10 @@ function App() {
           Upload your first video to get started
         </h2>
       )}
-      <div className="outline-black flex-grow">
+      {user_id == '' && (
+        <h2 className='flex justify-center text-3xl pt-20'>Please Log In to Get Started</h2>
+      )}
+      <div className=" flex-grow">
         <div className='flex flex-wrap gap-x-5 gap-y-10 pt-10 justify-center items-start'>
           {renderVideoData}
         </div>
