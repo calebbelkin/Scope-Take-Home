@@ -28,7 +28,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '90vw',
-  maxWidth: '800px',
+  maxWidth: '1200px',
   maxHeight: '90vh',
   bgcolor: '#D3D9D4',
   border: '2px solid #000',
