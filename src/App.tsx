@@ -40,6 +40,9 @@ function App() {
       {user_id == '' && (
         <h2 className='flex justify-center text-3xl pt-20'>Please Log In to Get Started</h2>
       )}
+           {user_id !== '' && videos.length > 0 && (
+        <h2 className='flex justify-center text-3xl pt-5'>Your Uploads</h2>
+      )}
       <div className=" flex-grow">
         <div className='flex flex-wrap gap-x-5 gap-y-10 pt-10 justify-center items-start'>
           {renderVideoData}

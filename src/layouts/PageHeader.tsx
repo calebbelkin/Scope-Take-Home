@@ -8,7 +8,14 @@ import Divider from '@mui/material/Divider';
 
 export function PageHeader() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
+  const [showLogoutButton, setShowLogoutButton] = useState(false);
   const { user_id, setUserId } = useContext(UserContext);
+
+  const handleLogout = () => {
+    setUserId('');
+    setShowLogoutButton(false);
+    window.location.reload();
+  };
 
   return (
     <div className="flex items-center justify-between py-4 px-6 mb-6">
@@ -20,7 +27,22 @@ export function PageHeader() {
       <div className={`flex-shrink-0 md:gap-2 ${showFullWidthSearch ? 'hidden' : 'flex'} items-center`}>
         {user_id ? <UploadCard /> : null}
         {user_id ? (
-          <img src={avatar} className="w-8 h-8 pt-1" alt="User Avatar" />
+          <div className="relative">
+            <img
+              src={avatar}
+              className="w-8 h-8 pt-1 cursor-pointer"
+              alt="User Avatar"
+              onClick={() => setShowLogoutButton(!showLogoutButton)}
+            />
+            {showLogoutButton && (
+              <button
+                className="absolute right-0 mt-2 py-2 px-4 bg-gray-800 text-white rounded text-sm"
+                onClick={handleLogout}
+              >
+                Log Out
+              </button>
+            )}
+          </div>
         ) : (
           <LoginCard setUserId={setUserId} />
         )}
