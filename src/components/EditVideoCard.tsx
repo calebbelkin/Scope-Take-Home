@@ -94,14 +94,18 @@ export default function EditVideoCard({ id, video_url, currDescription, currTitl
               onChange={(e) => setNewTitle(e.target.value)}
               className="w-full"
             />
-            <TextField
-              label="Description"
-              fullWidth
-              margin="normal"
-              value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
-              className="w-full"
-            />
+                  <TextField
+          id="outlined-multiline-flexible"
+          label="Description"
+          multiline
+          maxRows={4}
+          fullWidth
+          margin="normal"
+          value={newDescription}
+          onChange={(e) => setNewDescription(e.target.value)}
+          className="w-full"
+        />
+
             <Button
               type="submit"
               variant="contained"

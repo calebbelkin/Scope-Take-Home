@@ -83,7 +83,10 @@ export default function UploadCard() {
               className="w-full"
             />
             <TextField
-              label="Description"
+                 id="outlined-multiline-flexible"
+                 label="Description"
+                 multiline
+                 maxRows={4}
               fullWidth
               margin="normal"
               value={description}

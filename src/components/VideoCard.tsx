@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { UniformButton } from './Button';
 import ReactPlayer from 'react-player';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { UserContext } from '../context/UserContext';
 import EditVideoCard from '../components/EditVideoCard';
 import { Divider } from '@mui/material';
@@ -20,21 +20,22 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import avatar from '../assets/boy.png';
 import womenAvatar from '../assets/woman.png';
 import UserAvatar from '../assets/boy.png';
+import screenfull from 'screenfull';
 
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 900,
+  width: '90vw',
+  maxWidth: '800px',
+  maxHeight: '90vh',
   bgcolor: '#D3D9D4',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  maxHeight: '90vh',
   overflowY: 'auto',
 };
 
@@ -53,7 +54,8 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
   const { user_id } = useContext(UserContext);
   const [volume, setVolume] = useState(0.7);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
-//   const [isPlaying, setIsPlaying] = useState(false);
+
+  const playerContainerRef = useRef()
 
   const handleChangeVolume = (event: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
@@ -61,8 +63,11 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
 
   const handleChangeSpeed = (event: SelectChangeEvent) => {
     setPlaybackSpeed(Number(event.target.value));
-    console.log(playbackSpeed)
   };
+
+  const toggleFullScreen = () => {
+    screenfull.toggle(playerContainerRef.current)
+  }
 
   const handleSubmit = () => {
     uploadComment();
@@ -146,20 +151,19 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} className="lg:max-w-[1200px] overflow-hidden">
           <div className="flex flex-col gap-2 p-4 justify-center w-full">
-            <div className="relative w-full flex justify-center">
-              <div className="overflow-hidden rounded-lg w-full" style={{ paddingTop: '56.25%' }}>
-                {/* 16:9 Aspect Ratio */}
+            <div className="relative w-full flex justify-center pt-10">
+              <div ref={playerContainerRef} className="w-full h-0 pb-[56.25%] relative">
                 <ReactPlayer
                   url={video_url}
                   volume={volume}
-                //   playing={isPlaying}
                   playbackRate={playbackSpeed}
+                  toggleFullScreen={toggleFullScreen}
                   controls
                   width="100%"
                   height="100%"
-                  style={{ position: 'absolute', top: 0, left: 0 }}
+                  className="absolute top-0 left-0"
                 />
               </div>
             </div>
@@ -196,7 +200,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                       <MenuItem value={1.5}>1.5x</MenuItem>
                     </Select>
                   </FormControl>
-                  <FullscreenIcon fontSize="large" />
+                  <FullscreenIcon onClick={toggleFullScreen} fontSize="large" className='cursor-pointer'/>
                 </div>
               </div>
             </div>
