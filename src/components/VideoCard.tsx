@@ -21,15 +21,13 @@ import avatar from '../assets/boy.png';
 import womenAvatar from '../assets/woman.png';
 import UserAvatar from '../assets/boy.png';
 import screenfull from 'screenfull';
-import menAvatar from '../assets/profile.png'
+import menAvatar from '../assets/profile.png';
 
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '90vw',
-  maxWidth: '1200px',
   maxHeight: '90vh',
   bgcolor: '#D3D9D4',
   border: '2px solid #000',
@@ -56,7 +54,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
   const [volume, setVolume] = useState(0.7);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
-  const playerContainerRef = useRef()
+  const playerContainerRef = useRef();
 
   const handleChangeVolume = (event: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
@@ -67,8 +65,8 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
   };
 
   const toggleFullScreen = () => {
-    screenfull.toggle(playerContainerRef.current)
-  }
+    screenfull.toggle(playerContainerRef.current);
+  };
 
   const handleSubmit = () => {
     uploadComment();
@@ -134,7 +132,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
     }
   };
 
-  const actualCommentLength = comments.length + 1
+  const actualCommentLength = comments.length + 1;
 
   const mockUserComments = [
     {
@@ -172,9 +170,8 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
       profile_pic: menAvatar,
       user_id: 'daniel_jones',
       content: 'Really appreciated the step-by-step approach in this video.',
-    }
+    },
   ];
-  
 
   return (
     <div>
@@ -187,27 +184,43 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="lg:max-w-[1200px] overflow-hidden">
+     <Box
+  sx={style}
+  className="w-1/2 md:w-9/12 lg:w-8/12 xl:w-6/12 2xl:w-5/12 overflow-hidden"
+>
           <div className="flex flex-col gap-2 p-4 justify-center w-full">
-            <div className="relative w-full flex justify-center pt-10">
-              <div ref={playerContainerRef} className="w-full h-0 pb-[56.25%] relative">
-                <ReactPlayer
-                  url={video_url}
-                  volume={volume}
-                  playbackRate={playbackSpeed}
-                  toggleFullScreen={toggleFullScreen}
-                  controls
-                  width="100%"
-                  height="100%"
-                  className="absolute top-0 left-0"
-                />
-              </div>
-            </div>
+          <div className="relative w-full flex justify-center pt-10">
+  <div ref={playerContainerRef} className="
+    w-full
+    sm:w-[500px]
+    md:w-[600px]
+    lg:w-[700px]
+    xl:w-[800px]
+    2xl:w-[1200px]
+    h-0
+    pb-[56.25%]
+    relative
+  ">
+    <ReactPlayer
+      url={video_url}
+      volume={volume}
+      playbackRate={playbackSpeed}
+      toggleFullScreen={toggleFullScreen}
+      controls
+      width="100%"
+      height="100%"
+      className="absolute top-0 left-0"
+    />
+  </div>
+</div>
+
             <div>
-              <div className='flex justify-between items-center'>
-                <Typography className='pt-1' variant="h5">{title}</Typography>
-                <div className='flex items-center'></div>
-                <div className='flex items-center space-x-2'>
+              <div className="flex justify-between items-center">
+                <Typography className="pt-1" variant="h5">
+                  {title}
+                </Typography>
+                <div className="flex items-center"></div>
+                <div className="flex items-center space-x-2">
                   <VolumeDown />
                   <Box sx={{ minWidth: 120, display: 'flex', alignItems: 'center' }}>
                     <Slider
@@ -217,7 +230,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                       max={1}
                       step={0.01}
                       onChange={handleChangeVolume}
-                      className='mr-2'
+                      className="mr-2"
                     />
                   </Box>
                   <VolumeUp />
@@ -236,23 +249,23 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                       <MenuItem value={1.5}>1.5x</MenuItem>
                     </Select>
                   </FormControl>
-                  <FullscreenIcon onClick={toggleFullScreen} fontSize="large" className='cursor-pointer'/>
+                  <FullscreenIcon onClick={toggleFullScreen} fontSize="large" className="cursor-pointer" />
                 </div>
               </div>
             </div>
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center">
-                <img src={UserAvatar} alt="User avatar" className="h-8 w-8" onClick={() => console.log(id)}/>
+                <img src={UserAvatar} alt="User avatar" className="h-8 w-8" onClick={() => console.log(id)} />
                 <div className="flex flex-col justify-between pl-3">
                   <Typography variant="caption"> Uploaded by @{user_id}</Typography>
                 </div>
               </div>
-              <EditVideoCard id={id} video_url={video_url} currTitle={title} currDescription={description}/>
+              <EditVideoCard id={id} video_url={video_url} currTitle={title} currDescription={description} />
             </div>
             <Typography variant="body2">{description}</Typography>
             <Divider />
             <Typography variant="h7" style={{ fontWeight: 'bold' }}>
-            {actualCommentLength} {actualCommentLength === 1 ? 'Comment' : 'Comments'}
+              {actualCommentLength} {actualCommentLength === 1 ? 'Comment' : 'Comments'}
             </Typography>
             <div className="flex items-center">
               <img src={avatar} alt="User avatar" className="h-10 w-10" />
@@ -275,24 +288,24 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
               </UniformButton>
             </div>
             {mockUserComments.map((comment) => {
-  if (comment.video_id === id) {
-    return (
-      <div key={comment.user_id} className="flex pt-4">
-        <img src={comment.profile_pic} alt="User avatar" className="h-10 w-10" />
-        <div className="flex flex-col justify-between pl-3">
-          <Typography variant="caption">@{comment.user_id}</Typography>
-          <Typography variant="body2">{comment.content}</Typography>
-        </div>
-      </div>
-    );
-  }
-  return null;
-})}
+              if (comment.video_id === id) {
+                return (
+                  <div key={comment.user_id} className="flex pt-4">
+                    <img src={comment.profile_pic} alt="User avatar" className="h-10 w-10" />
+                    <div className="flex flex-col justify-between pl-3">
+                      <Typography variant="caption">@{comment.user_id}</Typography>
+                      <Typography variant="body2">{comment.content}</Typography>
+                    </div>
+                  </div>
+                );
+              }
+              return null;
+            })}
 
             <div>
               {comments.map((comment, index) => (
                 <div key={index} className="flex pt-4">
-                  <img src={UserAvatar} alt="User avatar" className="h-10 w-10"  />
+                  <img src={UserAvatar} alt="User avatar" className="h-10 w-10" />
                   <div className="flex flex-col justify-between pl-3">
                     <Typography variant="caption">@{comment.user_id}</Typography>
                     <Typography variant="body2">{comment.content}</Typography>
