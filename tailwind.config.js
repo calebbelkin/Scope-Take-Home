@@ -14,7 +14,11 @@ export default {
           dark: colors.neutral[800],
           ["dark-hover"]: colors.neutral[900]
         }
-      }
+      },
+      fontFamily: {
+        eczar: ['Eczar', 'serif'],
+        newsreader: ['Newsreader', 'serif'],
+      },
     },
   },
   plugins: [],

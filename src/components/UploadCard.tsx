@@ -83,10 +83,10 @@ export default function UploadCard() {
               className="w-full"
             />
             <TextField
-                 id="outlined-multiline-flexible"
-                 label="Description"
-                 multiline
-                 maxRows={4}
+              id="outlined-multiline-flexible"
+              label="Description"
+              multiline
+              maxRows={4}
               fullWidth
               margin="normal"
               value={description}
@@ -101,22 +101,27 @@ export default function UploadCard() {
               onChange={(e) => setUrl(e.target.value)}
               className="w-full"
             />
-          {url && (
-  <div className="relative pt-[56.25%] mt-4 w-full border border-gray-300">
-    <ReactPlayer url={url} controls className="absolute top-0 left-0 w-full h-full" />
-  </div>
-)}
-<div className='flex justify-end'>
-<Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white "
-            >
-              Submit
-            </Button>
-</div>
-
+            {url && (
+              <div className="relative pt-[56.25%] mt-4 w-full border border-gray-300 overflow-hidden">
+                <ReactPlayer
+                  url={url}
+                  controls
+                  width="100%"
+                  height="100%"
+                  className="absolute top-0 left-0"
+                />
+              </div>
+            )}
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className="mt-4 bg-blue-500 hover:bg-blue-700 text-white"
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </Box>
       </Modal>
