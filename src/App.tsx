@@ -20,7 +20,7 @@ function App() {
   const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 to-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 via-white to-blue-500">
       <PageHeader />
       {user_id && videos.length > 0 ? (
         <h1 className="flex justify-center font-newsreader text-4xl pb-5">

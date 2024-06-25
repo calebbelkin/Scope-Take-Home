@@ -1,30 +1,66 @@
-# React + TypeScript + Vite
+# Features
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+My take on LearnWell:
 
-Currently, two official plugins are available:
+Sign in with any user ID to access the videos for that user.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Once logged in, there are a few main features on the website:
 
-## Expanding the ESLint configuration
+Homepage: The homepage displays all of a user's uploaded videos along with their respective titles. Click on any video title to open that particular video's card. This will allow you to see the comments, description, make a comment, edit the video, as well as control playback speed, volume, and fullscreen.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![Homepage](Pictures/Main_Page.png)
 
-- Configure the top-level `parserOptions` property like this:
+Watch Videos: The videos can be watched directly from the homepage or inside their video card.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Upload a New Video: To upload a new video, click on the upload (cloud) icon in the top right corner of the screen. Enter your title, description, and video URL. Press submit to uplaod your video. 
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+![Upload](Pictures/Upload.png)
+
+Edit a Video: To edit a video, open that video's card. From there, you can edit the existing title and description. Press "publish changes" to finalize your updates.
+
+![Edit](Pictures/Edit.png)
+
+Comment on a Video: To comment on any video, open the video's card, type in the comment box next to your profile picture, and press "comment" to submit as the signed-in user.
+
+![Homepage](Pictures/VideoCard_Comments.png)
+
+
+
+# Running and Testing the Application
+
+Navigate to the Root Directory:
+Open your terminal and navigate to the root directory of the project.
+
+Install Dependencies:
+Install the necessary dependencies by running:
+
+npm install
+
+Run the Application:
+Start the application by running:
+
+
+npm run dev
+
+Open a New Terminal Window:
+Open a second terminal window.
+
+Navigate to the Server Directory:
+The server is located inside the root directory. Navigate to the server directory:
+
+
+cd server
+
+Install Server Dependencies:
+Install the necessary dependencies for the server by running:
+
+
+npm install
+
+Run the Server:
+Start the server by running:
+
+
+npm run dev
+
+Now, the applicatuin wil be running on http://localhost:5173.
