@@ -21,6 +21,7 @@ import avatar from '../assets/boy.png';
 import womenAvatar from '../assets/woman.png';
 import UserAvatar from '../assets/boy.png';
 import screenfull from 'screenfull';
+import menAvatar from '../assets/profile.png'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -133,12 +134,47 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
     }
   };
 
-  const mockUserComment = {
-    video_id: 'kDIZktbOa5x89QBr6p41',
-    profile_pic: womenAvatar,
-    user_id: 'alyssa_thompson',
-    content: 'Super helpful video, I always find myself coming back to this one!',
-  };
+  const actualCommentLength = comments.length + 1
+
+  const mockUserComments = [
+    {
+      video_id: 'kDIZktbOa5x89QBr6p41',
+      profile_pic: womenAvatar,
+      user_id: 'alyssa_thompson',
+      content: 'Super helpful video, I always find myself coming back to this one!',
+    },
+    {
+      video_id: 'ZAH1Z7JcVgxtZtkytVuA',
+      profile_pic: womenAvatar,
+      user_id: 'emma_johnson',
+      content: 'Great explanation! This really cleared things up for me.',
+    },
+    {
+      video_id: 'T5LQfWNUlWsvxjmf1CL9',
+      profile_pic: menAvatar,
+      user_id: 'john_smith',
+      content: 'Awesome content! Learned a lot from this video.',
+    },
+    {
+      video_id: 'QazW6r9zfphUk9VmnR0a',
+      profile_pic: menAvatar,
+      user_id: 'michael_davis',
+      content: 'This video was very informative and well-presented.',
+    },
+    {
+      video_id: 'dJ4RGJygVxlbuc3u3uT3',
+      profile_pic: womenAvatar,
+      user_id: 'sophia_williams',
+      content: 'Loved the video! The tips were really useful.',
+    },
+    {
+      video_id: 'ujKBRChvODNJbZl8OTDf',
+      profile_pic: menAvatar,
+      user_id: 'daniel_jones',
+      content: 'Really appreciated the step-by-step approach in this video.',
+    }
+  ];
+  
 
   return (
     <div>
@@ -206,7 +242,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
             </div>
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center">
-                <img src={UserAvatar} alt="User avatar" className="h-8 w-8" />
+                <img src={UserAvatar} alt="User avatar" className="h-8 w-8" onClick={() => console.log(id)}/>
                 <div className="flex flex-col justify-between pl-3">
                   <Typography variant="caption"> Uploaded by @{user_id}</Typography>
                 </div>
@@ -216,7 +252,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
             <Typography variant="body2">{description}</Typography>
             <Divider />
             <Typography variant="h7" style={{ fontWeight: 'bold' }}>
-              {comments.length} Comments
+            {actualCommentLength} {actualCommentLength === 1 ? 'Comment' : 'Comments'}
             </Typography>
             <div className="flex items-center">
               <img src={avatar} alt="User avatar" className="h-10 w-10" />
@@ -238,19 +274,25 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
                 Comment
               </UniformButton>
             </div>
-            {mockUserComment.video_id === id && (
-              <div className="flex pt-4">
-                <img src={mockUserComment.profile_pic} alt="User avatar" className="h-10 w-10" />
-                <div className="flex flex-col justify-between pl-3">
-                  <Typography variant="caption">@{mockUserComment.user_id}</Typography>
-                  <Typography variant="body2">{mockUserComment.content}</Typography>
-                </div>
-              </div>
-            )}
+            {mockUserComments.map((comment) => {
+  if (comment.video_id === id) {
+    return (
+      <div key={comment.user_id} className="flex pt-4">
+        <img src={comment.profile_pic} alt="User avatar" className="h-10 w-10" />
+        <div className="flex flex-col justify-between pl-3">
+          <Typography variant="caption">@{comment.user_id}</Typography>
+          <Typography variant="body2">{comment.content}</Typography>
+        </div>
+      </div>
+    );
+  }
+  return null;
+})}
+
             <div>
               {comments.map((comment, index) => (
                 <div key={index} className="flex pt-4">
-                  <img src={UserAvatar} alt="User avatar" className="h-10 w-10" />
+                  <img src={UserAvatar} alt="User avatar" className="h-10 w-10"  />
                   <div className="flex flex-col justify-between pl-3">
                     <Typography variant="caption">@{comment.user_id}</Typography>
                     <Typography variant="body2">{comment.content}</Typography>
