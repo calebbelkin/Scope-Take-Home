@@ -54,7 +54,7 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
   const [volume, setVolume] = useState(0.7);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
-  const playerContainerRef = useRef();
+  const playerContainerRef = useRef(null);
 
   const handleChangeVolume = (event: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
@@ -184,42 +184,40 @@ export default function VideoCard({ title, video_url, description, id }: VideoCa
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-     <Box
-  sx={style}
-  className="w-1/2 md:w-9/12 lg:w-8/12 xl:w-6/12 2xl:w-5/12 overflow-hidden"
->
+        <Box
+          sx={style}
+          className="w-1/2 md:w-9/12 lg:w-8/12 xl:w-6/12 2xl:w-5/12 overflow-hidden"
+        >
           <div className="flex flex-col gap-2 p-4 justify-center w-full">
-          <div className="relative w-full flex justify-center pt-10">
-  <div ref={playerContainerRef} className="
-    w-full
-    sm:w-[500px]
-    md:w-[600px]
-    lg:w-[700px]
-    xl:w-[800px]
-    2xl:w-[1200px]
-    h-0
-    pb-[56.25%]
-    relative
-  ">
-    <ReactPlayer
-      url={video_url}
-      volume={volume}
-      playbackRate={playbackSpeed}
-      toggleFullScreen={toggleFullScreen}
-      controls
-      width="100%"
-      height="100%"
-      className="absolute top-0 left-0"
-    />
-  </div>
-</div>
+            <div className="relative w-full flex justify-center pt-10">
+              <div ref={playerContainerRef} className="
+                w-full
+                sm:w-[500px]
+                md:w-[600px]
+                lg:w-[700px]
+                xl:w-[800px]
+                2xl:w-[1200px]
+                h-0
+                pb-[56.25%]
+                relative
+              ">
+                <ReactPlayer
+                  url={video_url}
+                  volume={volume}
+                  playbackRate={playbackSpeed}
+                  controls
+                  width="100%"
+                  height="100%"
+                  className="absolute top-0 left-0"
+                />
+              </div>
+            </div>
 
             <div>
               <div className="flex justify-between items-center">
                 <Typography className="pt-1" variant="h5">
                   {title}
                 </Typography>
-                <div className="flex items-center"></div>
                 <div className="flex items-center space-x-2">
                   <VolumeDown />
                   <Box sx={{ minWidth: 120, display: 'flex', alignItems: 'center' }}>

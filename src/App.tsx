@@ -28,7 +28,7 @@ function App() {
         </h1>
       ) : (
         <h1 className="flex justify-center font-newsreader text-5xl pb-5">
-          Welcome to Learnwell 
+          Welcome to Learnwell
         </h1>
       )}
       <Divider />
@@ -37,17 +37,20 @@ function App() {
           Upload your first video to get started
         </h2>
       )}
-      {user_id == '' && (
-        <h2 className='flex justify-center font-newsreader text-3xl pt-20'>Please Log In to Get Started</h2>
+      {user_id === '' && (
+        <h2 className="flex justify-center font-newsreader text-3xl pt-20">
+          Please Log In to Get Started
+        </h2>
       )}
-           {user_id !== '' && videos.length > 0 && (
-        <h2 className='flex justify-center text-3xl font-newsreader pt-5'>Your Uploads</h2>
+      {user_id !== '' && videos.length > 0 && (
+        <h2 className="flex justify-center text-3xl font-newsreader pt-5">
+          Your Uploads
+        </h2>
       )}
-      <div className=" flex-grow">
-        <div className='flex flex-wrap gap-x-5 gap-y-10 pt-10 justify-center items-start'>
+      <div className="flex-grow">
+        <div className="flex flex-wrap gap-x-5 gap-y-10 pt-10 justify-center items-start">
           {renderVideoData}
         </div>
-        <div></div>
       </div>
     </div>
   );

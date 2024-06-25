@@ -70,7 +70,7 @@ const controller = {
   
       } catch {
           return next({
-              err: "error in getVideo controller"
+              err: "error in get Comments controller"
           })
       }
   },
@@ -120,7 +120,7 @@ async editVideo (req: Request, res: Response, next: NextFunction) {
 
   } catch {
       return next({
-          err: "error in post Comment controller"
+          err: "error in edit Video controller"
       })
   }
 },

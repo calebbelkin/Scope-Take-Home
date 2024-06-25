@@ -29,7 +29,6 @@ const useGetVideos = (url: string) => {
 
         const text = await response.text();
         const data = text ? JSON.parse(text) : [];
-        console.log(data, 'line 26 why are more vids appearing ')
         setVideos(data.videos);
 
       } catch (error) {

@@ -4,7 +4,6 @@ import UploadCard from "../components/UploadCard";
 import avatar from '../assets/boy.png';
 import LoginCard from "../components/LoginCard";
 import { UserContext } from '../context/UserContext';
-import Divider from '@mui/material/Divider';
 
 export function PageHeader() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
@@ -44,7 +43,7 @@ export function PageHeader() {
             )}
           </div>
         ) : (
-          <LoginCard setUserId={setUserId} />
+          <LoginCard />
         )}
       </div>
     </div>
