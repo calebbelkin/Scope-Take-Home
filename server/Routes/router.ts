@@ -12,7 +12,6 @@ router.put("/videos", controller.editVideo, (req, res) => {
   res.status(200).send(res.locals.response);
 });
 router.get("/videos/comments/:video_id",controller.getComments, (req, res) => {
-  console.log('------IN get COMMENTS ROUTER')
   res.status(200).send(res.locals.comments);
 });
 router.post("/videos/comments", controller.postComment, (req, res) => {
