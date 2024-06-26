@@ -28,6 +28,8 @@ Comment on a Video: To comment on any video, open the video's card, type in the 
 
 # Running and Testing the Application
 
+First Clone the Repo:
+
 Navigate to the Root Directory:
 Open your terminal and navigate to the root directory of the project.
 
